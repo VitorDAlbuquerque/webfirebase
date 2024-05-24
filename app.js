@@ -37,28 +37,52 @@ app.get ('/consulta',  async function(req, res){
                 observacao:doc.get('observacao'),
                 origem:doc.get('origem'),
                 telefone:doc.get('telefone')
-        
             })
         })
-    
-
 
     res.render('consulta', {dados})
- 
-    
+
 })
 
-app.put('/editar/:id', async function(req, res){
-    const editar = await db.collection('pessoas').set({
+app.get("/editar/:id", async function(req,res){
+    try{
+        const doc = db.collection('pessoas').doc(req.params.id);
+        const docc = await doc.get();
+        if(!docc.exists){
+            console.log("erro")
+            res.status(404).send("n achou doc")
+        }
+        
+        else{
+            res.render("editar", { id:req.params.id, pessoas: docc.data() })
+        }
+    } catch(error){
+        console.error(error)
+        res.status(500).send("erro ao buscar doc")
+    }
+});
+
+app.post('/atualizar/:id', async function(req, res){
+ try{
+    
+    const edit = db.collection('pessoas').doc(req.params.id);
+    await edit.update({
         nome: req.body.nome,
         telefone: req.body.telefone,
         origem: req.body.origem,
         data_contato: req.body.data_contato,
         observacao: req.body.observacao
-    }).then(function(){
-        res.redirect('/')
-    })
-})
+    });
+    console.log('documento atualizado');
+    res.redirect('/consulta')
+
+ } catch(error){
+    console.error("erro", error);
+    res.status(500).send("erro ao buscar");
+ }
+}
+);
+
 
 app.post('/cadastrar', function (req, res) {
     var pessoas = db.collection('pessoas').add({
