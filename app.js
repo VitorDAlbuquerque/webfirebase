@@ -7,7 +7,7 @@ const { initializeApp, applicationDefault, cert } = require('firebase-admin/app'
 const { getFirestore, Timestamp, FieldValue, Filter } = require('firebase-admin/firestore');
 
 
-const serviceAccount = require('./fern-87ce9-firebase-adminsdk-sjvnz-0e50365d3b.json');
+const serviceAccount = require('./fern-87ce9-firebase-adminsdk-sjvnz-8ef5cc3b36.json');
 
 initializeApp({
     credential: cert(serviceAccount)
