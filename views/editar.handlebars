@@ -42,9 +42,8 @@
             <p class="text-start fs-5">Cadastrar - Agendamento de Potenciais Clientes</p>
             <p class="text-start fs-6">Sistema Utilizado para agendamento de serviços.</p>
             <p>
-                {{#each docc}}
                     
-                        <form action="/atualizar" method="POST">
+                        <form action="/atualizar/{{this.id}}" method="POST">
                             <div class="mb-3 text-start">
                                 <input type="hidden" name="id" class="form-control" id="nome" value="{{this.id}}">
                                 <label class="form-label">Nome:</label>
@@ -75,7 +74,7 @@
                             </div>
                         </form>
                     
-                {{/each}}
+               
             </p>
         </div>
         <div class="col-1">

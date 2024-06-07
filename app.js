@@ -97,6 +97,20 @@ app.post('/cadastrar', function (req, res) {
     })
 })
 
+app.get("/excluir/:id", async function(req,res){
+    try{
+
+        await db.collection('pessoas').doc(req.params.id).delete();
+        console.log('documento excluido com sucesso!');
+        res.redirect('/consulta');
+
+    }catch(error){
+        console.error("Error deleting document: ", error);
+        res.status(500).send("Erro ao excluir documento")
+    }
+})
+
+
 app.listen(8081, function(){
     console.log('Servidor ativo!')
 })
